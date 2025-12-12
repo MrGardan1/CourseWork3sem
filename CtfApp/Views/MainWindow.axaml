@@ -1,0 +1,71 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:CtfApp.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
+        x:Class="CtfApp.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="CTF Platform :: Login"
+        Width="400" Height="450"
+        WindowStartupLocation="CenterScreen"
+        CanResize="False"
+        ExtendClientAreaToDecorationsHint="True"
+        Background="#1e1e2e">
+
+    <!-- Основной контейнер с отступами -->
+    <Border Padding="40">
+        <StackPanel VerticalAlignment="Center" Spacing="20">
+            
+            <!-- Заголовок -->
+            <TextBlock Text="SYSTEM ACCESS" 
+                       Foreground="#a6e3a1" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center"
+                       LetterSpacing="2"/>
+
+            <TextBlock Text="Please authenticate" 
+                       Foreground="#a6adc8" 
+                       FontSize="14" 
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
+
+                        <!-- Поле Логина -->
+            <TextBox Watermark="Username" 
+                     Height="50"
+                     CornerRadius="5"
+                     VerticalContentAlignment="Center"/>
+
+            <!-- Поле Пароля -->
+            <TextBox Watermark="Password" 
+                     Height="50"
+                     CornerRadius="5"
+                     PasswordChar="•"
+                     VerticalContentAlignment="Center"/>
+
+            <!-- Кнопка Входа -->
+            <Button Content="CONNECT"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Height="50"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Foreground="#1e1e2e"
+                    Background="#a6e3a1"
+                    CornerRadius="5"
+                    Cursor="Hand"
+                    Margin="0,20,0,0"/>
+            
+            <!-- Статус (для ошибок) -->
+            <TextBlock Text="Ready for connection..." 
+                       Foreground="#585b70" 
+                       FontSize="12" 
+                       HorizontalAlignment="Center"
+                       Margin="0,10,0,0"/>
+            
+        </StackPanel>
+    </Border>
+
+</Window>

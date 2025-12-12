@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  ctf-db:
+    image: postgres:15
+    container_name: ctf_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: ctf_game
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
