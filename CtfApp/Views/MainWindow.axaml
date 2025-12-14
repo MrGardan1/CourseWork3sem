@@ -3,69 +3,104 @@
         xmlns:vm="using:CtfApp.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="CtfApp.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="CTF Platform :: Login"
-        Width="400" Height="450"
+        Title="CTF Platform"
+        Width="900" Height="650"
         WindowStartupLocation="CenterScreen"
-        CanResize="False"
-        ExtendClientAreaToDecorationsHint="True"
         Background="#1e1e2e">
 
-    <!-- Основной контейнер с отступами -->
-    <Border Padding="40">
-        <StackPanel VerticalAlignment="Center" Spacing="20">
+    <Grid>
+        <!-- ЭКРАН ВХОДА -->
+        <Border Padding="40" IsVisible="{Binding CurrentScreen, Converter={StaticResource StringEquals}, ConverterParameter=Login}" Background="#1e1e2e">
+            <StackPanel VerticalAlignment="Center" Spacing="20" MaxWidth="400">
+                <TextBlock Text="SYSTEM ACCESS" Foreground="#a6e3a1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Text="Please authenticate" Foreground="#a6adc8" FontSize="14" HorizontalAlignment="Center"/>
+                
+                <TextBox Watermark="Username" Text="{Binding Username}" Height="50" CornerRadius="5" VerticalContentAlignment="Center"/>
+                <TextBox Watermark="Password" Text="{Binding Password}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
+                
+                <Button Command="{Binding LoginCommand}" Content="CONNECT" 
+                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="50" 
+                        Background="#a6e3a1" Foreground="#1e1e2e" FontWeight="Bold" CornerRadius="5" Margin="0,20,0,0"/>
+                
+                <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" HorizontalAlignment="Center" FontWeight="Bold"/>
+                
+                <Button Content="Create Account" Background="Transparent" Foreground="#89b4fa" 
+                        HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                        Command="{Binding SwitchToRegisterCommand}" 
+                        Padding="0" Height="20" Margin="0,-15,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- ЭКРАН РЕГИСТРАЦИИ -->
+        <Border Padding="40" IsVisible="{Binding CurrentScreen, Converter={StaticResource StringEquals}, ConverterParameter=Register}" Background="#1e1e2e">
+            <StackPanel VerticalAlignment="Center" Spacing="20" MaxWidth="400" DataContext="{Binding RegisterViewModel}">
+                <TextBlock Text="CREATE ACCOUNT" Foreground="#a6e3a1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Text="Registration" Foreground="#a6adc8" FontSize="14" HorizontalAlignment="Center"/>
+                
+                <TextBox Watermark="Username" Text="{Binding Username}" Height="50" CornerRadius="5" VerticalContentAlignment="Center"/>
+                <TextBox Watermark="Password" Text="{Binding Password}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
+                <TextBox Watermark="Confirm Password" Text="{Binding PasswordConfirm}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
+                
+                <Button Command="{Binding RegisterCommand}" Content="REGISTER" 
+                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="50" 
+                        Background="#fab387" Foreground="#1e1e2e" FontWeight="Bold" CornerRadius="5" Margin="0,20,0,0"/>
+                
+                <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" HorizontalAlignment="Center" FontWeight="Bold"/>
+                
+                <Button Content="Back to Login" Background="Transparent" Foreground="#89b4fa" 
+                        HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                        Command="{Binding BackToLoginCommand}" 
+                        Padding="0" Height="20"/>
+            </StackPanel>
+        </Border>
+
+        <!-- ГЛАВНОЕ ОКНО (DASHBOARD) -->
+        <Grid IsVisible="{Binding CurrentScreen, Converter={StaticResource StringEquals}, ConverterParameter=Dashboard}" RowDefinitions="Auto,*,Auto" Background="#1e1e2e">
             
-            <!-- Заголовок -->
-            <TextBlock Text="SYSTEM ACCESS" 
-                       Foreground="#a6e3a1" 
-                       FontSize="24" 
-                       FontWeight="Bold" 
-                       HorizontalAlignment="Center"
-                       LetterSpacing="2"/>
+            <Border Grid.Row="0" Background="#181825" Height="60" Padding="20,0">
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <StackPanel Orientation="Horizontal" Spacing="10" Grid.Column="0">
+                        <TextBlock Text="CTF :: DASHBOARD" VerticalAlignment="Center" Foreground="#89b4fa" FontWeight="Bold" FontSize="18"/>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" Spacing="20" Grid.Column="2" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Username, StringFormat='User: {0}'}" Foreground="#a6adc8"/>
+                        <TextBlock Text="{Binding CurrentScore, StringFormat='Score: {0}'}" Foreground="#fab387" FontWeight="Bold" FontSize="16"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
 
-            <TextBlock Text="Please authenticate" 
-                       Foreground="#a6adc8" 
-                       FontSize="14" 
-                       HorizontalAlignment="Center"
-                       Margin="0,0,0,20"/>
+            <ScrollViewer Grid.Row="1" Padding="20">
+                <ItemsControl ItemsSource="{Binding Tasks}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#313244" CornerRadius="10" Padding="15" Margin="0,0,0,15" BorderBrush="#45475a" BorderThickness="1">
+                                <StackPanel Spacing="10">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Grid.Column="0" Text="{Binding Title}" FontSize="18" FontWeight="Bold" Foreground="#89b4fa"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Points, StringFormat='Points: {0}'}" Foreground="#bac2de" FontSize="12" VerticalAlignment="Center"/>
+                                    </Grid>
+                                    
+                                    <TextBlock Text="{Binding Description}" Foreground="#a6adc8" TextWrapping="Wrap"/>
+                                    
+                                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+                                        <TextBox Watermark="{Binding PlaceholderText}" Text="{Binding UserInput}" Width="300" Height="35" IsEnabled="{Binding !IsSolved}"/>
+                                        <Button Command="{Binding SubmitCommand}" Content="{Binding ButtonText}" Background="{Binding ButtonColor}" Foreground="#1e1e2e" FontWeight="Bold" Height="35" Width="120"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
 
-                        <!-- Поле Логина -->
-            <TextBox Watermark="Username" 
-                     Height="50"
-                     CornerRadius="5"
-                     VerticalContentAlignment="Center"/>
-
-            <!-- Поле Пароля -->
-            <TextBox Watermark="Password" 
-                     Height="50"
-                     CornerRadius="5"
-                     PasswordChar="•"
-                     VerticalContentAlignment="Center"/>
-
-            <!-- Кнопка Входа -->
-            <Button Content="CONNECT"
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    Height="50"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Foreground="#1e1e2e"
-                    Background="#a6e3a1"
-                    CornerRadius="5"
-                    Cursor="Hand"
-                    Margin="0,20,0,0"/>
-            
-            <!-- Статус (для ошибок) -->
-            <TextBlock Text="Ready for connection..." 
-                       Foreground="#585b70" 
-                       FontSize="12" 
-                       HorizontalAlignment="Center"
-                       Margin="0,10,0,0"/>
-            
-        </StackPanel>
-    </Border>
+            <Button Grid.Row="2" Content="LOGOUT" Background="#f38ba8" Foreground="#1e1e2e" 
+                    HorizontalAlignment="Right" Margin="20" Width="100"/>
+        </Grid>
+    </Grid>
 
 </Window>
