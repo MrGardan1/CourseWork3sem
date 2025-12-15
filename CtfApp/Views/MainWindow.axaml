@@ -99,7 +99,7 @@
             </ScrollViewer>
 
             <Button Grid.Row="2" Content="LOGOUT" Background="#f38ba8" Foreground="#1e1e2e" 
-                    HorizontalAlignment="Right" Margin="20" Width="100"/>
+                    HorizontalAlignment="Right" Margin="20" Width="100" Command="{Binding SwitchToLoginCommand}"/>
         </Grid>
     </Grid>
 

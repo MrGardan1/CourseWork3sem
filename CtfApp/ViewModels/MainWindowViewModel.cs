@@ -69,6 +69,7 @@ public partial class MainWindowViewModel : ViewModelBase
             StatusMessage = "ACCESS GRANTED";
             StatusColor = "#a6e3a1";
             IsLoggedIn = true;
+            Session.CurrentUser = user;
             CurrentScore = user.Score;
             CurrentScreen = "Dashboard";
             _failedAttempts = 0;
@@ -104,8 +105,24 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
-    public void AddScore(int points)
+        public void AddScore(int points)
     {
         CurrentScore += points;
+        
+        // Добавь этот блок для сохранения в БД
+        if (Session.CurrentUser != null)
+        {
+            using var db = new AppDbContext();
+            var user = db.Users.Find(Session.CurrentUser.Id);
+            if (user != null)
+            {
+                user.Score = CurrentScore;
+                db.SaveChanges(); // <-- Сохраняем в базу!
+                
+                // Обновляем и в сессии, чтобы было синхронно
+                Session.CurrentUser.Score = CurrentScore;
+            }
+        }
     }
+
 }

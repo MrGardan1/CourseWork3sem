@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CtfApp.Data;
+using Avalonia.Media;
 
 namespace CtfApp.ViewModels;
 
@@ -11,8 +12,7 @@ public partial class TaskItemViewModel : ObservableObject
 
     [ObservableProperty] private string _userInput = "";
     [ObservableProperty] private bool _isSolved = false;
-    [ObservableProperty] private string _buttonColor = "#a6e3a1";
-    [ObservableProperty] private string _buttonText = "SUBMIT";
+    [ObservableProperty] private IBrush _buttonColor = SolidColorBrush.Parse("#a6e3a1");    [ObservableProperty] private string _buttonText = "SUBMIT";
     [ObservableProperty] private string _placeholderText = "Enter flag...";
 
     public string Title => _task.Title;
@@ -35,8 +35,7 @@ public partial class TaskItemViewModel : ObservableObject
         {
             IsSolved = true;
             ButtonText = "SOLVED ✓";
-            ButtonColor = "#f9e2af";
-            UserInput = _task.Flag;
+            ButtonColor = SolidColorBrush.Parse("#f9e2af");            UserInput = _task.Flag;
             _mainVm.AddScore(Points);
         }
         else
