@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:CtfApp.ViewModels"
+        xmlns:v="using:CtfApp.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
@@ -12,95 +13,112 @@
         WindowStartupLocation="CenterScreen"
         Background="#1e1e2e">
 
-    <Grid>
+    <Panel>
         <!-- ЭКРАН ВХОДА -->
-        <Border Padding="40" IsVisible="{Binding CurrentScreen, Converter={StaticResource StringEquals}, ConverterParameter=Login}" Background="#1e1e2e">
-            <StackPanel VerticalAlignment="Center" Spacing="20" MaxWidth="400">
-                <TextBlock Text="SYSTEM ACCESS" Foreground="#a6e3a1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                <TextBlock Text="Please authenticate" Foreground="#a6adc8" FontSize="14" HorizontalAlignment="Center"/>
-                
-                <TextBox Watermark="Username" Text="{Binding Username}" Height="50" CornerRadius="5" VerticalContentAlignment="Center"/>
-                <TextBox Watermark="Password" Text="{Binding Password}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
-                
-                <Button Command="{Binding LoginCommand}" Content="CONNECT" 
-                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="50" 
-                        Background="#a6e3a1" Foreground="#1e1e2e" FontWeight="Bold" CornerRadius="5" Margin="0,20,0,0"/>
-                
-                <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" HorizontalAlignment="Center" FontWeight="Bold"/>
-                
-                <Button Content="Create Account" Background="Transparent" Foreground="#89b4fa" 
-                        HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-                        Command="{Binding SwitchToRegisterCommand}" 
-                        Padding="0" Height="20" Margin="0,-15,0,0"/>
-            </StackPanel>
-        </Border>
+        <Panel IsVisible="{Binding CurrentScreen, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Login}">
+            <Border Padding="40" Background="#1e1e2e">
+                <StackPanel VerticalAlignment="Center" Spacing="20" MaxWidth="400">
+                    <TextBlock Text="SYSTEM ACCESS" Foreground="#a6e3a1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Please authenticate" Foreground="#a6adc8" FontSize="14" HorizontalAlignment="Center"/>
+                    
+                    <TextBox Watermark="Username" Text="{Binding Username}" Height="50" CornerRadius="5" VerticalContentAlignment="Center"/>
+                    <TextBox Watermark="Password" Text="{Binding Password}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
+                    
+                    <Button Command="{Binding LoginCommand}" Content="CONNECT" 
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="50" 
+                            Background="#a6e3a1" Foreground="#1e1e2e" FontWeight="Bold" CornerRadius="5" Margin="0,20,0,0"/>
+                    
+                    <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" HorizontalAlignment="Center" FontWeight="Bold"/>
+                    
+                    <Button Content="Create Account" Background="Transparent" Foreground="#89b4fa" 
+                            HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                            Command="{Binding SwitchToRegisterCommand}" 
+                            Padding="0" Height="20" Margin="0,-15,0,0"/>
+                </StackPanel>
+            </Border>
+        </Panel>
 
         <!-- ЭКРАН РЕГИСТРАЦИИ -->
-        <Border Padding="40" IsVisible="{Binding CurrentScreen, Converter={StaticResource StringEquals}, ConverterParameter=Register}" Background="#1e1e2e">
-            <StackPanel VerticalAlignment="Center" Spacing="20" MaxWidth="400" DataContext="{Binding RegisterViewModel}">
-                <TextBlock Text="CREATE ACCOUNT" Foreground="#a6e3a1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                <TextBlock Text="Registration" Foreground="#a6adc8" FontSize="14" HorizontalAlignment="Center"/>
-                
-                <TextBox Watermark="Username" Text="{Binding Username}" Height="50" CornerRadius="5" VerticalContentAlignment="Center"/>
-                <TextBox Watermark="Password" Text="{Binding Password}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
-                <TextBox Watermark="Confirm Password" Text="{Binding PasswordConfirm}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
-                
-                <Button Command="{Binding RegisterCommand}" Content="REGISTER" 
-                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="50" 
-                        Background="#fab387" Foreground="#1e1e2e" FontWeight="Bold" CornerRadius="5" Margin="0,20,0,0"/>
-                
-                <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" HorizontalAlignment="Center" FontWeight="Bold"/>
-                
-                <Button Content="Back to Login" Background="Transparent" Foreground="#89b4fa" 
-                        HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-                        Command="{Binding BackToLoginCommand}" 
-                        Padding="0" Height="20"/>
-            </StackPanel>
-        </Border>
+        <Panel IsVisible="{Binding CurrentScreen, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Register}">
+            <Border Padding="40" Background="#1e1e2e">
+                <StackPanel VerticalAlignment="Center" Spacing="20" MaxWidth="400" DataContext="{Binding RegisterViewModel}">
+                    <TextBlock Text="CREATE ACCOUNT" Foreground="#a6e3a1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Registration" Foreground="#a6adc8" FontSize="14" HorizontalAlignment="Center"/>
+                    
+                    <TextBox Watermark="Username" Text="{Binding Username}" Height="50" CornerRadius="5" VerticalContentAlignment="Center"/>
+                    <TextBox Watermark="Password" Text="{Binding Password}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
+                    <TextBox Watermark="Confirm Password" Text="{Binding PasswordConfirm}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
+                    
+                    <Button Command="{Binding RegisterCommand}" Content="REGISTER" 
+                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="50" 
+                            Background="#fab387" Foreground="#1e1e2e" FontWeight="Bold" CornerRadius="5" Margin="0,20,0,0"/>
+                    
+                    <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" HorizontalAlignment="Center" FontWeight="Bold"/>
+                    
+                    <Button Content="Back to Login" Background="Transparent" Foreground="#89b4fa" 
+                            HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                            Command="{Binding BackToLoginCommand}" 
+                            Padding="0" Height="20"/>
+                </StackPanel>
+            </Border>
+        </Panel>
 
         <!-- ГЛАВНОЕ ОКНО (DASHBOARD) -->
-        <Grid IsVisible="{Binding CurrentScreen, Converter={StaticResource StringEquals}, ConverterParameter=Dashboard}" RowDefinitions="Auto,*,Auto" Background="#1e1e2e">
-            
-            <Border Grid.Row="0" Background="#181825" Height="60" Padding="20,0">
-                <Grid ColumnDefinitions="Auto,*,Auto">
-                    <StackPanel Orientation="Horizontal" Spacing="10" Grid.Column="0">
-                        <TextBlock Text="CTF :: DASHBOARD" VerticalAlignment="Center" Foreground="#89b4fa" FontWeight="Bold" FontSize="18"/>
-                    </StackPanel>
-                    
-                    <StackPanel Orientation="Horizontal" Spacing="20" Grid.Column="2" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding Username, StringFormat='User: {0}'}" Foreground="#a6adc8"/>
-                        <TextBlock Text="{Binding CurrentScore, StringFormat='Score: {0}'}" Foreground="#fab387" FontWeight="Bold" FontSize="16"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
+        <Panel IsVisible="{Binding CurrentScreen, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Dashboard}">
+            <Grid RowDefinitions="Auto,*,Auto" Background="#1e1e2e">
+                
+                <Border Grid.Row="0" Background="#181825" Height="60" Padding="20,0">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <StackPanel Orientation="Horizontal" Spacing="10" Grid.Column="0">
+                            <TextBlock Text="CTF :: DASHBOARD" VerticalAlignment="Center" Foreground="#89b4fa" FontWeight="Bold" FontSize="18"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="20" Grid.Column="2" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Username, StringFormat='User: {0}'}" Foreground="#a6adc8"/>
+                            <TextBlock Text="{Binding CurrentScore, StringFormat='Score: {0}'}" Foreground="#fab387" FontWeight="Bold" FontSize="16"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
 
-            <ScrollViewer Grid.Row="1" Padding="20">
-                <ItemsControl ItemsSource="{Binding Tasks}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Background="#313244" CornerRadius="10" Padding="15" Margin="0,0,0,15" BorderBrush="#45475a" BorderThickness="1">
-                                <StackPanel Spacing="10">
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <TextBlock Grid.Column="0" Text="{Binding Title}" FontSize="18" FontWeight="Bold" Foreground="#89b4fa"/>
-                                        <TextBlock Grid.Column="1" Text="{Binding Points, StringFormat='Points: {0}'}" Foreground="#bac2de" FontSize="12" VerticalAlignment="Center"/>
-                                    </Grid>
-                                    
-                                    <TextBlock Text="{Binding Description}" Foreground="#a6adc8" TextWrapping="Wrap"/>
-                                    
-                                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
-                                        <TextBox Watermark="{Binding PlaceholderText}" Text="{Binding UserInput}" Width="300" Height="35" IsEnabled="{Binding !IsSolved}"/>
-                                        <Button Command="{Binding SubmitCommand}" Content="{Binding ButtonText}" Background="{Binding ButtonColor}" Foreground="#1e1e2e" FontWeight="Bold" Height="35" Width="120"/>
+                <ScrollViewer Grid.Row="1" Padding="20">
+                    <ItemsControl ItemsSource="{Binding Tasks}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#313244" CornerRadius="10" Padding="15" Margin="0,0,0,15" BorderBrush="#45475a" BorderThickness="1">
+                                    <StackPanel Spacing="10">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Grid.Column="0" Text="{Binding Title}" FontSize="18" FontWeight="Bold" Foreground="#89b4fa"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Points, StringFormat='Points: {0}'}" Foreground="#bac2de" FontSize="12" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        
+                                        <TextBlock Text="{Binding Description}" Foreground="#a6adc8" TextWrapping="Wrap"/>
+                                        
+                                        <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+                                            <TextBox Watermark="{Binding PlaceholderText}" Text="{Binding UserInput}" Width="300" Height="35" IsEnabled="{Binding !IsSolved}"/>
+                                            <Button Command="{Binding SubmitCommand}" Content="{Binding ButtonText}" Background="{Binding ButtonColor}" Foreground="#1e1e2e" FontWeight="Bold" Height="35" Width="120"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
 
-            <Button Grid.Row="2" Content="LOGOUT" Background="#f38ba8" Foreground="#1e1e2e" 
-                    HorizontalAlignment="Right" Margin="20" Width="100" Command="{Binding SwitchToLoginCommand}"/>
-        </Grid>
-    </Grid>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" Margin="20">
+                    <Button Content="PROFILE" Background="#89b4fa" Foreground="#1e1e2e" 
+                            Width="100" FontWeight="Bold" CornerRadius="5"
+                            Command="{Binding SwitchToProfileCommand}"/>
+                    <Button Content="LOGOUT" Background="#f38ba8" Foreground="#1e1e2e" 
+                            Width="100" FontWeight="Bold" CornerRadius="5"
+                            Command="{Binding SwitchToLoginCommand}"/>
+                </StackPanel>
+            </Grid>
+        </Panel>
+
+        <!-- ЭКРАН ПРОФИЛЯ -->
+        <Panel IsVisible="{Binding CurrentScreen, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Profile}">
+            <v:ProfileView DataContext="{Binding ProfileViewModel}" />
+        </Panel>
+    </Panel>
 
 </Window>

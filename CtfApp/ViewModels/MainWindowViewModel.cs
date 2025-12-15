@@ -17,6 +17,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private int _currentScore = 0;
     [ObservableProperty] private string _currentScreen = "Login";
     [ObservableProperty] private RegisterViewModel _registerViewModel;
+    [ObservableProperty] private ProfileViewModel? _profileViewModel;
 
     private int _failedAttempts = 0;
     private const int MaxAttempts = 5;
@@ -26,6 +27,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         RegisterViewModel = new RegisterViewModel(this);
+        // ProfileViewModel создадим только после логина!
     }
 
     [RelayCommand]
@@ -42,6 +44,29 @@ public partial class MainWindowViewModel : ViewModelBase
     public void SwitchToRegister()
     {
         CurrentScreen = "Register";
+    }
+
+    [RelayCommand]
+    public void SwitchToProfile()
+    {
+        // Создаём ProfileViewModel только если юзер залогинился
+        if (Session.CurrentUser != null && ProfileViewModel == null)
+        {
+            ProfileViewModel = new ProfileViewModel(this);
+        }
+        
+        if (ProfileViewModel != null)
+        {
+            ProfileViewModel.LoadProfileData();        
+        }
+        
+        CurrentScreen = "Profile";
+    }
+
+    [RelayCommand]
+    public void SwitchToDashboard()
+    {
+        CurrentScreen = "Dashboard";
     }
 
     [RelayCommand]
@@ -105,11 +130,9 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
-        public void AddScore(int points)
+    public void AddScore(int points)
     {
         CurrentScore += points;
-        
-        // Добавь этот блок для сохранения в БД
         if (Session.CurrentUser != null)
         {
             using var db = new AppDbContext();
@@ -117,12 +140,9 @@ public partial class MainWindowViewModel : ViewModelBase
             if (user != null)
             {
                 user.Score = CurrentScore;
-                db.SaveChanges(); // <-- Сохраняем в базу!
-                
-                // Обновляем и в сессии, чтобы было синхронно
-                Session.CurrentUser.Score = CurrentScore;
+                db.SaveChanges();
             }
+            Session.CurrentUser.Score = CurrentScore;
         }
     }
-
 }
