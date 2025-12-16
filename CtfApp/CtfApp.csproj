@@ -16,6 +16,7 @@
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.9" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.9" />
         <PackageReference Include="Avalonia.ReactiveUI" Version="11.3.9" />
+        <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
         <PackageReference Include="ReactiveUI" Version="20.1.1" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />

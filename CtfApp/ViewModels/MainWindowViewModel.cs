@@ -11,7 +11,7 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private string _username = "";
     [ObservableProperty] private string _password = "";
-    [ObservableProperty] private string _statusMessage = "Ready for connection...";
+    [ObservableProperty] private string _statusMessage = "";
     [ObservableProperty] private string _statusColor = "#585b70";
     [ObservableProperty] private bool _isLoggedIn = false;
     [ObservableProperty] private int _currentScore = 0;
@@ -87,9 +87,10 @@ public partial class MainWindowViewModel : ViewModelBase
         }
 
         using var db = new AppDbContext();
-        var user = db.Users.FirstOrDefault(u => u.Username == Username && u.Password == Password);
+        var user = db.Users.FirstOrDefault(u => u.Username == Username);
 
-        if (user != null)
+        // ⬇️ ИЗМЕНИЛИ: Проверяем хеш вместо прямого сравнения
+        if (user != null && PasswordHelper.VerifyPassword(Password, user.Password))
         {
             StatusMessage = "ACCESS GRANTED";
             StatusColor = "#a6e3a1";
@@ -129,6 +130,7 @@ public partial class MainWindowViewModel : ViewModelBase
             }
         }
     }
+
 
     public void AddScore(int points)
     {

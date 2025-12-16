@@ -12,7 +12,7 @@ public partial class RegisterViewModel : ViewModelBase
     [ObservableProperty] private string _username = "";
     [ObservableProperty] private string _password = "";
     [ObservableProperty] private string _passwordConfirm = "";
-    [ObservableProperty] private string _statusMessage = "Create new account";
+    [ObservableProperty] private string _statusMessage = "";
     [ObservableProperty] private string _statusColor = "#a6adc8";
 
     public RegisterViewModel(MainWindowViewModel mainVm)
@@ -25,65 +25,49 @@ public partial class RegisterViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(PasswordConfirm))
         {
-            StatusMessage = "All fields are required";
+            StatusMessage = "Fill all fields";
             StatusColor = "#f9e2af";
             return;
         }
 
         if (Password != PasswordConfirm)
         {
-            StatusMessage = "Passwords do not match";
+            StatusMessage = "Passwords don't match";
             StatusColor = "#f38ba8";
-            PasswordConfirm = "";
-            return;
-        }
-
-        if (Password.Length < 4)
-        {
-            StatusMessage = "Password must be at least 4 characters";
-            StatusColor = "#f9e2af";
             return;
         }
 
         using var db = new AppDbContext();
-
+        
         if (db.Users.Any(u => u.Username == Username))
         {
             StatusMessage = "Username already exists";
             StatusColor = "#f38ba8";
-            Username = "";
             return;
         }
 
-        try
+        var newUser = new User
         {
-            var newUser = new User
+            Username = Username,
+            Password = PasswordHelper.HashPassword(Password),
+            IsAdmin = false,
+            Score = 0
+        };
+
+        db.Users.Add(newUser);
+        db.SaveChanges();
+
+        StatusMessage = "Account created successfully!";
+        StatusColor = "#a6e3a1";
+
+        // Переход на логин через 1.5 секунды
+        System.Threading.Tasks.Task.Delay(1500).ContinueWith(_ =>
+        {
+            Avalonia.Threading.Dispatcher.UIThread.Invoke(() =>
             {
-                Username = Username,
-                Password = Password,
-                Score = 0,
-                IsAdmin = false
-            };
-
-            db.Users.Add(newUser);
-            db.SaveChanges();
-
-            StatusMessage = "Registration successful! Redirecting to login...";
-            StatusColor = "#a6e3a1";
-
-            System.Threading.Tasks.Task.Delay(1500).ContinueWith(_ =>
-            {
-                Avalonia.Threading.Dispatcher.UIThread.Invoke(() =>
-                {
-                    _mainVm.SwitchToLogin();
-                });
+                _mainVm.SwitchToLoginCommand.Execute(null);
             });
-        }
-        catch
-        {
-            StatusMessage = "Database error. Try again.";
-            StatusColor = "#f38ba8";
-        }
+        });
     }
 
     [RelayCommand]

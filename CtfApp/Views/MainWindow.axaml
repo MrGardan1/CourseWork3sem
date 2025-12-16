@@ -16,51 +16,85 @@
     <Panel>
         <!-- ЭКРАН ВХОДА -->
         <Panel IsVisible="{Binding CurrentScreen, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Login}">
-            <Border Padding="40" Background="#1e1e2e">
-                <StackPanel VerticalAlignment="Center" Spacing="20" MaxWidth="400">
-                    <TextBlock Text="SYSTEM ACCESS" Foreground="#a6e3a1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Please authenticate" Foreground="#a6adc8" FontSize="14" HorizontalAlignment="Center"/>
+            <Grid Background="#1e1e2e">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="25" Width="450">
                     
-                    <TextBox Watermark="Username" Text="{Binding Username}" Height="50" CornerRadius="5" VerticalContentAlignment="Center"/>
-                    <TextBox Watermark="Password" Text="{Binding Password}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
+                    <!-- Заголовок -->
+                    <TextBlock Text="Welcome" Foreground="#a6e3a1" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center"/>
                     
-                    <Button Command="{Binding LoginCommand}" Content="CONNECT" 
-                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="50" 
-                            Background="#a6e3a1" Foreground="#1e1e2e" FontWeight="Bold" CornerRadius="5" Margin="0,20,0,0"/>
+                    <!-- Форма входа -->
+                    <Border Background="#313244" CornerRadius="10" Padding="35,30" BorderBrush="#45475a" BorderThickness="1">
+                        <StackPanel Spacing="20">
+                            <TextBlock Text="Login" Foreground="#cdd6f4" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                            
+                            <TextBox Watermark="Username" Text="{Binding Username}" 
+                                     Height="48" CornerRadius="8" VerticalContentAlignment="Center"
+                                     Background="#1e1e2e" Foreground="#cdd6f4" BorderBrush="#585b70"/>
+                            
+                            <TextBox Watermark="Password" Text="{Binding Password}" 
+                                     Height="48" CornerRadius="8" PasswordChar="●" VerticalContentAlignment="Center"
+                                     Background="#1e1e2e" Foreground="#cdd6f4" BorderBrush="#585b70"/>
+                            
+                            <Button Command="{Binding LoginCommand}" Content="SIGN IN" 
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="48" 
+                                    Background="#a6e3a1" Foreground="#1e1e2e" FontWeight="Bold" CornerRadius="8" FontSize="14" Margin="0,10,0,0"/>
+                            
+                            <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" 
+                                       HorizontalAlignment="Center" FontWeight="SemiBold" TextWrapping="Wrap" TextAlignment="Center" MinHeight="20"/>
+                        </StackPanel>
+                    </Border>
                     
-                    <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" HorizontalAlignment="Center" FontWeight="Bold"/>
-                    
-                    <Button Content="Create Account" Background="Transparent" Foreground="#89b4fa" 
-                            HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-                            Command="{Binding SwitchToRegisterCommand}" 
-                            Padding="0" Height="20" Margin="0,-15,0,0"/>
+                    <!-- Регистрация -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+                        <TextBlock Text="Don't have an account?" Foreground="#a6adc8" FontSize="13"/>
+                        <Button Content="Sign Up" Background="Transparent" Foreground="#89b4fa" 
+                                Command="{Binding SwitchToRegisterCommand}" 
+                                FontWeight="SemiBold" FontSize="13" Padding="0" Height="20"/>
+                    </StackPanel>
                 </StackPanel>
-            </Border>
+            </Grid>
         </Panel>
 
-        <!-- ЭКРАН РЕГИСТРАЦИИ -->
+                <!-- ЭКРАН РЕГИСТРАЦИИ -->
         <Panel IsVisible="{Binding CurrentScreen, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Register}">
-            <Border Padding="40" Background="#1e1e2e">
-                <StackPanel VerticalAlignment="Center" Spacing="20" MaxWidth="400" DataContext="{Binding RegisterViewModel}">
-                    <TextBlock Text="CREATE ACCOUNT" Foreground="#a6e3a1" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Registration" Foreground="#a6adc8" FontSize="14" HorizontalAlignment="Center"/>
+            <Grid Background="#1e1e2e">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="25" Width="450" DataContext="{Binding RegisterViewModel}">
+                                        
+                    <!-- Форма регистрации -->
+                    <Border Background="#313244" CornerRadius="10" Padding="35,30" BorderBrush="#45475a" BorderThickness="1">
+                        <StackPanel Spacing="20">
+                            <TextBlock Text="Sign Up" Foreground="#cdd6f4" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                            
+                            <TextBox Watermark="Username" Text="{Binding Username}" 
+                                     Height="48" CornerRadius="8" VerticalContentAlignment="Center"
+                                     Background="#1e1e2e" Foreground="#cdd6f4" BorderBrush="#585b70"/>
+                            
+                            <TextBox Watermark="Password" Text="{Binding Password}" 
+                                     Height="48" CornerRadius="8" PasswordChar="●" VerticalContentAlignment="Center"
+                                     Background="#1e1e2e" Foreground="#cdd6f4" BorderBrush="#585b70"/>
+                            
+                            <TextBox Watermark="Confirm Password" Text="{Binding PasswordConfirm}" 
+                                     Height="48" CornerRadius="8" PasswordChar="●" VerticalContentAlignment="Center"
+                                     Background="#1e1e2e" Foreground="#cdd6f4" BorderBrush="#585b70"/>
+                            
+                            <Button Command="{Binding RegisterCommand}" Content="CREATE ACCOUNT" 
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="48" 
+                                    Background="#fab387" Foreground="#1e1e2e" FontWeight="Bold" CornerRadius="8" FontSize="14" Margin="0,10,0,0"/>
+                            
+                            <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" 
+                                       HorizontalAlignment="Center" FontWeight="SemiBold" TextWrapping="Wrap" TextAlignment="Center" MinHeight="20"/>
+                        </StackPanel>
+                    </Border>
                     
-                    <TextBox Watermark="Username" Text="{Binding Username}" Height="50" CornerRadius="5" VerticalContentAlignment="Center"/>
-                    <TextBox Watermark="Password" Text="{Binding Password}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
-                    <TextBox Watermark="Confirm Password" Text="{Binding PasswordConfirm}" Height="50" CornerRadius="5" PasswordChar="•" VerticalContentAlignment="Center"/>
-                    
-                    <Button Command="{Binding RegisterCommand}" Content="REGISTER" 
-                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="50" 
-                            Background="#fab387" Foreground="#1e1e2e" FontWeight="Bold" CornerRadius="5" Margin="0,20,0,0"/>
-                    
-                    <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" HorizontalAlignment="Center" FontWeight="Bold"/>
-                    
-                    <Button Content="Back to Login" Background="Transparent" Foreground="#89b4fa" 
-                            HorizontalAlignment="Center" HorizontalContentAlignment="Center"
-                            Command="{Binding BackToLoginCommand}" 
-                            Padding="0" Height="20"/>
+                    <!-- Вход -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+                        <TextBlock Text="Already have an account?" Foreground="#a6adc8" FontSize="13"/>
+                        <Button Content="Sign In" Background="Transparent" Foreground="#89b4fa" 
+                                Command="{Binding BackToLoginCommand}" 
+                                FontWeight="SemiBold" FontSize="13" Padding="0" Height="20"/>
+                    </StackPanel>
                 </StackPanel>
-            </Border>
+            </Grid>
         </Panel>
 
         <!-- ГЛАВНОЕ ОКНО (DASHBOARD) -->
