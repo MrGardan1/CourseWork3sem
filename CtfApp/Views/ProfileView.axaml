@@ -58,6 +58,9 @@
             <!-- FOOTER BUTTONS -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" Margin="0,20,0,0">
                 <Button Command="{Binding BackToDashboardCommand}" Content="BACK TO DASHBOARD" 
+                        Background="#89b4fa" Foreground="#1e1e2e" FontWeight="Bold" 
+                        Padding="15,10" CornerRadius="5"/>
+                <Button Command="{Binding LogoutCommand}" Content="LOGOUT" 
                         Background="#f38ba8" Foreground="#1e1e2e" FontWeight="Bold" 
                         Padding="15,10" CornerRadius="5"/>
             </StackPanel>

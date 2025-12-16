@@ -64,4 +64,10 @@ public partial class ProfileViewModel : ViewModelBase
     {
         _mainViewModel?.SwitchToDashboardCommand.Execute(null);
     }
+
+    [RelayCommand]
+    public void Logout()
+    {
+        _mainViewModel?.SwitchToLoginCommand.Execute(null);
+    }
 }

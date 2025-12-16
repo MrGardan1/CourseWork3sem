@@ -55,7 +55,7 @@
             </Grid>
         </Panel>
 
-                <!-- ЭКРАН РЕГИСТРАЦИИ -->
+        <!-- ЭКРАН РЕГИСТРАЦИИ -->
         <Panel IsVisible="{Binding CurrentScreen, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Register}">
             <Grid Background="#1e1e2e">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="25" Width="450" DataContext="{Binding RegisterViewModel}">
@@ -142,9 +142,6 @@
                     <Button Content="PROFILE" Background="#89b4fa" Foreground="#1e1e2e" 
                             Width="100" FontWeight="Bold" CornerRadius="5"
                             Command="{Binding SwitchToProfileCommand}"/>
-                    <Button Content="LOGOUT" Background="#f38ba8" Foreground="#1e1e2e" 
-                            Width="100" FontWeight="Bold" CornerRadius="5"
-                            Command="{Binding SwitchToLoginCommand}"/>
                 </StackPanel>
             </Grid>
         </Panel>
