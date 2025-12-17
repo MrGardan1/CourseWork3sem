@@ -10,6 +10,9 @@
 
     <Application.Resources>
         <local:StringEqualsConverter x:Key="StringEquals"/>
+        <local:BoolToBackgroundConverter x:Key="BoolToBackground"/>
+        <local:BoolToFontWeightConverter x:Key="BoolToFontWeight"/>
+        <local:PositionToMedalConverter x:Key="PositionToMedal"/>
     </Application.Resources>
 
     <Application.Styles>

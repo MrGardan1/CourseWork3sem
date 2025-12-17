@@ -14,10 +14,12 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private string _statusMessage = "";
     [ObservableProperty] private string _statusColor = "#585b70";
     [ObservableProperty] private bool _isLoggedIn = false;
+    [ObservableProperty] private string _currentUsername = "";
     [ObservableProperty] private int _currentScore = 0;
     [ObservableProperty] private string _currentScreen = "Login";
     [ObservableProperty] private RegisterViewModel _registerViewModel;
     [ObservableProperty] private ProfileViewModel? _profileViewModel;
+    [ObservableProperty] private LeaderboardViewModel? _leaderboardViewModel;
 
     private int _failedAttempts = 0;
     private const int MaxAttempts = 5;
@@ -27,7 +29,6 @@ public partial class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         RegisterViewModel = new RegisterViewModel(this);
-        // ProfileViewModel создадим только после логина!
     }
 
     [RelayCommand]
@@ -64,6 +65,22 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    public void SwitchToLeaderboard()
+    {
+        if (Session.CurrentUser != null && LeaderboardViewModel == null)
+        {
+            LeaderboardViewModel = new LeaderboardViewModel(this);
+        }
+        
+        if (LeaderboardViewModel != null)
+        {
+            LeaderboardViewModel.LoadLeaderboard();
+        }
+        
+        CurrentScreen = "Leaderboard";
+    }
+
+    [RelayCommand]
     public void SwitchToDashboard()
     {
         CurrentScreen = "Dashboard";
@@ -89,13 +106,14 @@ public partial class MainWindowViewModel : ViewModelBase
         using var db = new AppDbContext();
         var user = db.Users.FirstOrDefault(u => u.Username == Username);
 
-        // ⬇️ ИЗМЕНИЛИ: Проверяем хеш вместо прямого сравнения
+        // Проверяем хеш
         if (user != null && PasswordHelper.VerifyPassword(Password, user.Password))
         {
             StatusMessage = "ACCESS GRANTED";
             StatusColor = "#a6e3a1";
             IsLoggedIn = true;
             Session.CurrentUser = user;
+            CurrentUsername = user.Username;
             CurrentScore = user.Score;
             CurrentScreen = "Dashboard";
             _failedAttempts = 0;
@@ -105,6 +123,11 @@ public partial class MainWindowViewModel : ViewModelBase
             {
                 Tasks.Add(new TaskItemViewModel(task, this));
             }
+            // ОЧИЩАЕМ ПОЛЯ ПОСЛЕ ВХОДА
+            Username = "";
+            Password = "";
+            StatusMessage = "";
+            StatusMessage = "";
         }
         else
         {
@@ -147,4 +170,31 @@ public partial class MainWindowViewModel : ViewModelBase
             Session.CurrentUser.Score = CurrentScore;
         }
     }
+
+    [RelayCommand]
+    private void Logout()
+    {
+        // Очищаем сессию
+        Session.CurrentUser = null;
+        IsLoggedIn = false;
+        CurrentScore = 0;
+        CurrentUsername = "";
+        
+        // Очищаем задачи
+        Tasks.Clear();
+        
+        // Сбрасываем ViewModels
+        ProfileViewModel = null;
+        LeaderboardViewModel = null;
+        
+        // Очищаем поля входа
+        Username = "";
+        Password = "";
+        StatusMessage = "";
+        _failedAttempts = 0;
+        
+        // Возвращаемся на экран логина
+        CurrentScreen = "Login";
+    }
+
 }

@@ -35,13 +35,16 @@ public class User
 public class CtfTask
 {
     public int Id { get; set; }
+    public string Category { get; set; } = "Misc";
+    public string Difficulty { get; set; } = "Easy";
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string Flag { get; set; } = string.Empty;
     public int Points { get; set; }
+    public string Hint { get; set; } = string.Empty;
+    public string Solution { get; set; } = string.Empty;
 }
 
-// ← НОВАЯ МОДЕЛЬ
 public class UserTask
 {
     public int UserId { get; set; }

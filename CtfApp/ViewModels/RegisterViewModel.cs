@@ -30,6 +30,25 @@ public partial class RegisterViewModel : ViewModelBase
             return;
         }
 
+        // ПРОВЕРКА ДЛИНЫ ПАРОЛЯ
+        if (Password.Length < 4)
+        {
+            StatusMessage = "Password too short (min 4 characters)";
+            StatusColor = "#f38ba8";
+            Password = "";
+            PasswordConfirm = "";
+            return;
+        }
+
+        if (Password.Length > 25)
+        {
+            StatusMessage = "Password too long (max 25 characters)";
+            StatusColor = "#f38ba8";
+            Password = "";
+            PasswordConfirm = "";
+            return;
+        }
+
         if (Password != PasswordConfirm)
         {
             StatusMessage = "Passwords don't match";
@@ -60,12 +79,18 @@ public partial class RegisterViewModel : ViewModelBase
         StatusMessage = "Account created successfully!";
         StatusColor = "#a6e3a1";
 
+        // ОЧИЩАЕМ ПОЛЯ
+        Username = "";
+        Password = "";
+        PasswordConfirm = "";
+
         // Переход на логин через 1.5 секунды
         System.Threading.Tasks.Task.Delay(1500).ContinueWith(_ =>
         {
             Avalonia.Threading.Dispatcher.UIThread.Invoke(() =>
             {
                 _mainVm.SwitchToLoginCommand.Execute(null);
+                StatusMessage = "";
             });
         });
     }

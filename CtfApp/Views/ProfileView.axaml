@@ -15,7 +15,6 @@
                         <TextBlock Text="PERSONAL PROFILE" Foreground="#a6e3a1" FontSize="24" FontWeight="Bold"/>
                         <TextBlock Text="{Binding Username}" Foreground="#89b4fa" FontSize="18"/>
                     </StackPanel>
-                    
                     <StackPanel Grid.Column="1" Spacing="10" VerticalAlignment="Center">
                         <StackPanel Orientation="Horizontal" Spacing="20">
                             <StackPanel Spacing="5">
@@ -24,7 +23,21 @@
                             </StackPanel>
                             <StackPanel Spacing="5">
                                 <TextBlock Text="Tasks Solved" Foreground="#a6adc8" FontSize="12"/>
-                                <TextBlock Text="{Binding SolvedTasks}" Foreground="#a6e3a1" FontSize="20" FontWeight="Bold"/>
+                                <TextBlock Foreground="#a6e3a1" FontSize="20" FontWeight="Bold">
+                                    <Run Text="{Binding SolvedTasks}"/>
+                                    <Run Text="/" Foreground="#585b70"/>
+                                    <Run Text="{Binding TotalTasks}"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel Spacing="5">
+                                <TextBlock Text="Completion" Foreground="#a6adc8" FontSize="12"/>
+                                <TextBlock Text="{Binding CompletionPercent, StringFormat='{}{0:F1}%'}" 
+                                           Foreground="#89b4fa" FontSize="20" FontWeight="Bold"/>
+                            </StackPanel>
+                            <StackPanel Spacing="5" IsVisible="{Binding ShowRank}">
+                                <TextBlock Text="Rank" Foreground="#a6adc8" FontSize="12"/>
+                                <TextBlock Text="{Binding LeaderboardText}" 
+                                           Foreground="#f9e2af" FontSize="20" FontWeight="Bold"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
