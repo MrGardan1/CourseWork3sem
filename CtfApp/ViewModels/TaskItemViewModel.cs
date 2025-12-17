@@ -14,10 +14,10 @@ public partial class TaskItemViewModel : ObservableObject
     [ObservableProperty] private bool _isSolved = false;
     [ObservableProperty] private string _statusMessage = "";
     [ObservableProperty] private string _statusColor = "#585b70";
-    [ObservableProperty] private int _attemptCount = 0;           // ← ДОБАВИЛИ
-    [ObservableProperty] private bool _showHintButton = false;    // ← ДОБАВИЛИ
-    [ObservableProperty] private bool _hintRevealed = false;      // ← ДОБАВИЛИ
-    [ObservableProperty] private bool _showSolution = false;      // ← ДОБАВИЛИ
+    [ObservableProperty] private int _attemptCount = 0;
+    [ObservableProperty] private bool _showHintButton = false;
+    [ObservableProperty] private bool _hintRevealed = false;
+    [ObservableProperty] private bool _showSolution = false;
 
     public int Id => _task.Id;
     public string Title => _task.Title;
@@ -25,8 +25,8 @@ public partial class TaskItemViewModel : ObservableObject
     public int Points => _task.Points;
     public string Category => _task.Category;
     public string Difficulty => _task.Difficulty;
-    public string Hint => _task.Hint;                            // ← ДОБАВИЛИ
-    public string Solution => _task.Solution;                    // ← ДОБАВИЛИ
+    public string Hint => _task.Hint;
+    public string Solution => _task.Solution;
 
     public string DifficultyColor => _task.Difficulty switch
     {
@@ -77,11 +77,11 @@ public partial class TaskItemViewModel : ObservableObject
 
         if (UserInput.Trim().ToLower() == _task.Flag.ToLower())
         {
-            // ✅ ПРАВИЛЬНЫЙ ОТВЕТ
+            // Правильный ответ
             StatusMessage = $"Correct! +{_task.Points} points";
             StatusColor = "#a6e3a1";
             IsSolved = true;
-            ShowSolution = true;  // ← Показываем объяснение
+            ShowSolution = true;
             ShowHintButton = false;
 
             // Сохраняем в БД
@@ -101,7 +101,7 @@ public partial class TaskItemViewModel : ObservableObject
             _mainVm.LeaderboardViewModel?.LoadLeaderboard();
         }
         else {
-            // ❌ НЕПРАВИЛЬНЫЙ ОТВЕТ
+            // Неправильный ответ
             if (AttemptCount < 3)
             {
                 AttemptCount++;

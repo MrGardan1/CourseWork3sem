@@ -3,7 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using CtfApp.Views;
 using CtfApp.ViewModels;
-using System;  // ← ДОБАВЬ
+using System;
 
 namespace CtfApp;
 
@@ -25,16 +25,9 @@ public partial class App : Application
                 db.Users.Add(new CtfApp.Data.User 
                 { 
                     Username = "admin", 
-                    Password = "$2a$12$m6abb5gocDQezrc/B7.NJ.nN2GqD8VKuC596aABnF50UOw/wuaFWi",
+                    Password = "$2a$12$m6abb5gocDQezrc/B7.NJ.nN2GqD8VKuC596aABnF50UOw/wuaFWi", // захешировал, чтобы пароль не висел открытый
                     IsAdmin = true, 
                     Score = 0 
-                });
-                db.Tasks.Add(new CtfApp.Data.CtfTask
-                {
-                    Title = "Test Task",
-                    Description = "This is a test task",
-                    Flag = "flag{1}",
-                    Points = 10
                 });
                 db.SaveChanges();
             }

@@ -101,7 +101,7 @@
         <Panel IsVisible="{Binding CurrentScreen, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Dashboard}">
             <Grid RowDefinitions="Auto,*" Background="#1e1e2e">
                 
-                <!-- ХЕДЕР -->
+                <!-- Заголовок -->
                 <Border Grid.Row="0" Background="#181825" Height="60" Padding="20,0" ZIndex="200">
                     <Grid ColumnDefinitions="Auto,*,Auto">
                         <StackPanel Orientation="Horizontal" Spacing="10" Grid.Column="0">
@@ -120,7 +120,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Background="#313244" CornerRadius="10" Padding="15" Margin="0,0,0,15" BorderBrush="#45475a" BorderThickness="1">                                    <StackPanel Spacing="10">
-                                        <!-- ЗАГОЛОВОК -->
+                                        <!-- Заголовок -->
                                         <Grid ColumnDefinitions="Auto,*,Auto,Auto">
                                             <Border Grid.Column="0" Background="#45475a" CornerRadius="5" Padding="8,4" Margin="0,0,10,0">
                                                 <TextBlock Text="{Binding Category}" Foreground="#89b4fa" FontSize="11" FontWeight="Bold"/>
@@ -132,26 +132,26 @@
                                             <TextBlock Grid.Column="3" Text="{Binding Points, StringFormat='{}{0} pts'}" Foreground="#fab387" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>
                                         </Grid>
                                         
-                                        <!-- ОПИСАНИЕ -->
+                                        <!-- Описание -->
                                         <TextBlock Text="{Binding Description}" Foreground="#a6adc8" TextWrapping="Wrap"/>
                                         
-                                        <!-- ВВОД И КНОПКИ -->
+                                        <!-- Ввод и кнопки -->
                                         <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
                                             <TextBox Watermark="{Binding PlaceholderText}" Text="{Binding UserInput}" Width="300" Height="35" IsEnabled="{Binding !IsSolved}"/>
                                             <Button Command="{Binding SubmitCommand}" Content="{Binding ButtonText}" Background="{Binding ButtonColor}" Foreground="#1e1e2e" FontWeight="Bold" Height="35" Width="120" CornerRadius="5"/>
                                             
-                                            <!-- КНОПКА ПОДСКАЗКИ (после 3 попыток) -->
+                                            <!-- Кнопка подсказки (после 3 попыток) -->
                                             <Button Command="{Binding ShowHintCommand}" Content="💡 HINT?" 
                                                     Background="#f9e2af" Foreground="#1e1e2e" FontWeight="Bold" 
                                                     Height="35" Width="100" CornerRadius="5"
                                                     IsVisible="{Binding ShowHintButton}"/>
                                         </StackPanel>
                                         
-                                        <!-- СТАТУС -->
+                                        <!-- Статус -->
                                         <TextBlock Text="{Binding StatusMessage}" Foreground="{Binding StatusColor}" 
                                                    FontSize="13" FontWeight="Bold" IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
                                         
-                                        <!-- ПОДСКАЗКА (после клика на HINT) -->
+                                        <!-- Подсказка (после клика на HINT) -->
                                         <Border Background="#313244" BorderBrush="#f9e2af" BorderThickness="2" 
                                                 CornerRadius="8" Padding="12" Margin="0,10,0,0"
                                                 IsVisible="{Binding HintRevealed}">
@@ -161,7 +161,7 @@
                                             </StackPanel>
                                         </Border>
                                         
-                                        <!-- ОБЪЯСНЕНИЕ (после правильного ответа) -->
+                                        <!-- Объяснение (после правильного ответа) -->
                                         <Border Background="#313244" BorderBrush="#a6e3a1" BorderThickness="2" 
                                                 CornerRadius="8" Padding="12" Margin="0,10,0,0"
                                                 IsVisible="{Binding ShowSolution}">
@@ -177,7 +177,7 @@
                     </ItemsControl>
                 </ScrollViewer>
 
-                <!-- НИЖНЯЯ ПАНЕЛЬ -->
+                <!-- Нижняя панель -->
                 <Border Grid.Row="1" 
                         VerticalAlignment="Bottom"
                         Background="#E61e1e2e"

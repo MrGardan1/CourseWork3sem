@@ -6,7 +6,7 @@ public class AppDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<CtfTask> Tasks { get; set; }
-    public DbSet<UserTask> UserTasks { get; set; }  // ← ДОБАВИЛИ
+    public DbSet<UserTask> UserTasks { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -15,7 +15,6 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Настройка составного ключа для UserTask
         modelBuilder.Entity<UserTask>()
             .HasKey(ut => new { ut.UserId, ut.TaskId });
 

@@ -11,9 +11,9 @@ public class BoolToBackgroundConverter : IValueConverter
     {
         if (value is bool isCurrentUser && isCurrentUser)
         {
-            return SolidColorBrush.Parse("#313244");  // Подсветка для текущего юзера
+            return SolidColorBrush.Parse("#313244");
         }
-        return SolidColorBrush.Parse("#1e1e2e");  // Обычный фон
+        return SolidColorBrush.Parse("#1e1e2e");
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

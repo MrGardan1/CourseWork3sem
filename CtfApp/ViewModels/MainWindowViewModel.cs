@@ -50,7 +50,6 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     public void SwitchToProfile()
     {
-        // Создаём ProfileViewModel только если юзер залогинился
         if (Session.CurrentUser != null && ProfileViewModel == null)
         {
             ProfileViewModel = new ProfileViewModel(this);
@@ -106,7 +105,6 @@ public partial class MainWindowViewModel : ViewModelBase
         using var db = new AppDbContext();
         var user = db.Users.FirstOrDefault(u => u.Username == Username);
 
-        // Проверяем хеш
         if (user != null && PasswordHelper.VerifyPassword(Password, user.Password))
         {
             StatusMessage = "ACCESS GRANTED";
@@ -123,7 +121,6 @@ public partial class MainWindowViewModel : ViewModelBase
             {
                 Tasks.Add(new TaskItemViewModel(task, this));
             }
-            // ОЧИЩАЕМ ПОЛЯ ПОСЛЕ ВХОДА
             Username = "";
             Password = "";
             StatusMessage = "";

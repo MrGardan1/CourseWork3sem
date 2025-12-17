@@ -22,10 +22,7 @@ public partial class ProfileViewModel : ViewModelBase
 
     public ObservableCollection<TaskItemViewModel> SolvedTasksList { get; } = new();
 
-    public ProfileViewModel()
-    {
-        // Конструктор без параметров для дизайнера
-    }
+    public ProfileViewModel() {}
 
     public ProfileViewModel(MainWindowViewModel mainViewModel)
     {
@@ -42,7 +39,7 @@ public partial class ProfileViewModel : ViewModelBase
 
         using var db = new AppDbContext();
         
-        // Получаем ТОЛЬКО решенные задачи пользователя
+        // Получаем только решенные задачи пользователя
         var solvedTaskIds = db.UserTasks
             .Where(ut => ut.UserId == Session.CurrentUser.Id)
             .Select(ut => ut.TaskId)

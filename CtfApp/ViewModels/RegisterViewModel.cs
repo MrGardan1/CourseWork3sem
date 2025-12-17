@@ -30,7 +30,6 @@ public partial class RegisterViewModel : ViewModelBase
             return;
         }
 
-        // ПРОВЕРКА ДЛИНЫ ПАРОЛЯ
         if (Password.Length < 4)
         {
             StatusMessage = "Password too short (min 4 characters)";
@@ -79,7 +78,6 @@ public partial class RegisterViewModel : ViewModelBase
         StatusMessage = "Account created successfully!";
         StatusColor = "#a6e3a1";
 
-        // ОЧИЩАЕМ ПОЛЯ
         Username = "";
         Password = "";
         PasswordConfirm = "";

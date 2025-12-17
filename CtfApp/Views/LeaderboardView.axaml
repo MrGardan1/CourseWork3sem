@@ -74,7 +74,7 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <!-- FOOTER BUTTONS -->
+            <!-- Нижние кнопки -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" Margin="0,20,0,0">
                 <Button Command="{Binding BackToDashboardCommand}" Content="BACK TO DASHBOARD" 
                         Background="#f38ba8" Foreground="#1e1e2e" FontWeight="Bold" 

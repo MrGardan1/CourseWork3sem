@@ -12,10 +12,7 @@ public partial class LeaderboardViewModel : ViewModelBase
 
     public ObservableCollection<LeaderboardEntry> Leaderboard { get; } = new();
 
-    public LeaderboardViewModel()
-    {
-        // Конструктор без параметров для дизайнера
-    }
+    public LeaderboardViewModel() {}
 
     public LeaderboardViewModel(MainWindowViewModel mainViewModel)
     {
@@ -60,7 +57,6 @@ public partial class LeaderboardViewModel : ViewModelBase
     }
 }
 
-// Модель для записи в лидерборде
 public partial class LeaderboardEntry : ObservableObject
 {
     [ObservableProperty] private int _position;
